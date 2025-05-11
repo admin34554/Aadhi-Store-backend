@@ -21,7 +21,7 @@ public class TaxMasterController {
         this.taxMasterService = taxMasterService;
     }
 
-    @GetMapping(value = "list-view")
+    @GetMapping(value = "/list-view")
     private List<TaxMaster> getAllTaxes() {
         return taxMasterService.getAllTaxes();
     }
