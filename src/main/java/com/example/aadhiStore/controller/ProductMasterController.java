@@ -3,6 +3,8 @@ package com.example.aadhiStore.controller;
 
 import com.example.aadhiStore.entity.ProductMaster;
 import com.example.aadhiStore.service.ProductMasterService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,8 @@ import java.util.List;
 @RequestMapping("api/v1/product-master")
 public class ProductMasterController {
 
+
+    private static final Logger log = LoggerFactory.getLogger(ProductMasterController.class);
     @Autowired
     private final ProductMasterService productMasterService;
 
@@ -23,6 +27,7 @@ public class ProductMasterController {
 
     @GetMapping(value = "/list-view")
     private List<ProductMaster> getAllProducts() {
+        log.info("Fetched all entries successfully");
         return productMasterService.getAllProducts();
     }
 
@@ -34,6 +39,7 @@ public class ProductMasterController {
     @PostMapping
     private ResponseEntity<ProductMaster> createProduct(@RequestBody ProductMaster productMaster) {
         ProductMaster createProduct = productMasterService.createProduct(productMaster);
+        log.info("Entry created successfully" + productMaster);
         return new ResponseEntity<>(createProduct, HttpStatus.CREATED);
     }
 
@@ -41,9 +47,11 @@ public class ProductMasterController {
     private ResponseEntity<ProductMaster> updateProduct(@PathVariable Long id, @RequestBody ProductMaster productMaster) {
         ProductMaster updateProduct = productMasterService.updateProduct(id, productMaster);
         if (productMaster != null) {
+            log.info("Entry updated successfully" + productMaster);
             return new ResponseEntity<>(updateProduct, HttpStatus.OK);
         }
         else {
+            log.info("Entry not found" + productMaster);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
