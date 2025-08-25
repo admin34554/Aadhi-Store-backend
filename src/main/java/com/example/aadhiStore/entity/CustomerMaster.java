@@ -25,13 +25,13 @@ public class CustomerMaster {
     private String code;
 
     @Column(name = "name")
-    private String name;
+    private String fullName;
 
     @Column(name = "door_no")
-    private String doorNo;
+    private String doorNumber;
 
     @Column(name = "street_name")
-    private String streetName;
+    private String street;
 
     @Column(name = "area")
     private String area;
@@ -61,7 +61,7 @@ public class CustomerMaster {
     private Long aadharNumber;
 
     @Column(name = "sugar_lic_no")
-    private String sugarLicNo;
+    private String sugarLicense;
 
     @Column(name = "credit_period")
     private Long creditPeriod;
