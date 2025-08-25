@@ -1,9 +1,6 @@
 spring:
-  datasource:
-    url: jdbc:postgresql://localhost:5432/aadhi_store
-    username: postgres
-    password: 1121
-    driver-class-name: org.postgresql.Driver
+  profiles:
+    active: dev
 
   servlet:
     multipart:
@@ -11,16 +8,9 @@ spring:
       max-file-size: 10MB
       max-request-size: 10MB
 
-  jpa:
-    hibernate:
-      ddl-auto: update
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-        default_schema: tenant_default
 
 server:
-  port: 9090
+  port: ${PORT:8080}
 
 logging:
   file:
