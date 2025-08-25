@@ -1,7 +1,3 @@
-databases:
-  - name: aadhi-db
-    plan: free
-
 services:
   - type: web
     name: aadhi-store
@@ -13,9 +9,7 @@ services:
       - key: JAVA_OPTS
         value: -Xmx512m
       - key: SPRING_DATASOURCE_URL
-        fromDatabase:
-          name: aadhi-db
-          property: jdbcUrl
+        value: jdbc:postgresql://${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_NAME}
       - key: SPRING_DATASOURCE_USERNAME
         fromDatabase:
           name: aadhi-db
