@@ -1,19 +1,6 @@
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-
-  jpa:
-    hibernate:
-      ddl-auto: update
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-        default_schema: tenant_default
-
-server:
-  port: ${PORT:8080}
-
-logging:
-  file:
-    path: logs/
-    name: logs/application.log
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}

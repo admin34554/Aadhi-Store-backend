@@ -9,7 +9,9 @@ services:
       - key: JAVA_OPTS
         value: -Xmx512m
       - key: SPRING_DATASOURCE_URL
-        value: jdbc:postgresql://${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_NAME}
+        fromDatabase:
+          name: aadhi-db
+          property: connectionString
       - key: SPRING_DATASOURCE_USERNAME
         fromDatabase:
           name: aadhi-db
