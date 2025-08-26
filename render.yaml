@@ -9,7 +9,7 @@ services:
       - key: JAVA_OPTS
         value: -Xmx512m
       - key: SPRING_DATASOURCE_URL
-        value: jdbc:postgresql://dpg-d2m09uf5r7bs73e68p4g-a:5432/aadhi_db
+        value: jdbc:postgresql://dpg-d2m09uf5r7bs73e68p4g-a.oregon-postgres.render.com:5432/aadhi_db
       - key: SPRING_DATASOURCE_USERNAME
         fromDatabase:
           name: aadhi-db
@@ -18,6 +18,7 @@ services:
         fromDatabase:
           name: aadhi-db
           property: password
+
 databases:
   - name: aadhi-db
     plan: free
