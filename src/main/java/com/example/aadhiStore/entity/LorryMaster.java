@@ -1,10 +1,13 @@
 package com.example.aadhiStore.entity;
 
+import com.example.aadhiStore.dto.Route;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Entity
 @Getter
@@ -40,5 +43,9 @@ public class LorryMaster {
 
     @Column(name = "mobile_number")
     private Long mobileNumber;
+
+    @Column(name = "route_covered")
+    @Enumerated(EnumType.STRING)
+    private List<Route> routeCovering;
 
 }

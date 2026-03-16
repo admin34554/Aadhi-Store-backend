@@ -49,16 +49,16 @@ public class CustomerMaster {
     private String contactPerson;
 
     @Column(name = "phone_number")
-    private Long phoneNumber;
+    private Long phone;
 
     @Column(name = "mobile_number")
-    private Long mobileNumber;
+    private Long cell;
 
     @Column(name = "gst_number")
-    private String gstNumber;
+    private String gstIn;
 
     @Column(name = "aadhar_number")
-    private Long aadharNumber;
+    private Long aadhar;
 
     @Column(name = "sugar_lic_no")
     private String sugarLicense;
