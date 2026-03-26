@@ -5,6 +5,13 @@
       password: npg_n0lQcjAkXuL3
       driver-class-name: org.postgresql.Driver
 
+      hikari:
+        maximum-pool-size: 10
+        minimum-idle: 2
+        idle-timeout: 30000
+        connection-timeout: 20000
+        max-lifetime: 1800000
+
     jpa:
       hibernate:
         ddl-auto: update
@@ -12,6 +19,7 @@
         hibernate:
           dialect: org.hibernate.dialect.PostgreSQLDialect
           default_schema: tenant_default
+          format_sql: true
 
   server:
     port: 9090
