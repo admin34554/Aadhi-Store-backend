@@ -64,4 +64,7 @@ public class SupplierMaster {
     @Enumerated(EnumType.STRING)
     private Type type;
 
+    @Column(name = "active")
+    private boolean active;
+
 }
