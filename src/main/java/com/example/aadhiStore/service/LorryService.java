@@ -1,6 +1,7 @@
 package com.example.aadhiStore.service;
 
 import com.example.aadhiStore.dto.InvalidInput;
+import com.example.aadhiStore.dto.LorryDTO;
 import com.example.aadhiStore.entity.LorryMaster;
 import com.example.aadhiStore.repository.LorryRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -44,4 +45,7 @@ public class LorryService {
         lorryRepository.deleteById(id);
     }
 
+    public List<LorryDTO> findAll() {
+        return lorryRepository.findAllForDropdown();
+    }
 }

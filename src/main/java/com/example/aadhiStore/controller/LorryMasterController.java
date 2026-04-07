@@ -1,5 +1,6 @@
 package com.example.aadhiStore.controller;
 
+import com.example.aadhiStore.dto.LorryDTO;
 import com.example.aadhiStore.entity.LorryMaster;
 import com.example.aadhiStore.service.LorryService;
 import org.slf4j.Logger;
@@ -28,9 +29,9 @@ public class LorryMasterController {
     }
 
     @GetMapping("/list-view")
-    private List<LorryMaster> getAllLorry() {
+    private List<LorryDTO> getAllLorry() {
         log.info("Fetched all entries successfully");
-        return lorryService.getAllLorry();
+        return lorryService.findAll();
     }
 
     @GetMapping("/{id}")
