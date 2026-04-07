@@ -1,5 +1,6 @@
 package com.example.aadhiStore.controller;
 
+import com.example.aadhiStore.dto.BrokerDTO;
 import com.example.aadhiStore.entity.BrokerMaster;
 import com.example.aadhiStore.service.BrokerMasterService;
 import org.slf4j.Logger;
@@ -29,9 +30,9 @@ public class BrokerMasterController {
 
 
     @GetMapping("/list-view")
-    private List<BrokerMaster> getAllBrokers() {
+    private List<BrokerDTO> getAllBrokers() {
         log.info("Fetched all entries successfully");
-        return brokerMasterService.getAllBrokers();
+        return brokerMasterService.findAll();
     }
 
     @GetMapping("/{id}")

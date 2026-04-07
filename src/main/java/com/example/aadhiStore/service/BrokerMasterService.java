@@ -1,5 +1,6 @@
 package com.example.aadhiStore.service;
 
+import com.example.aadhiStore.dto.BrokerDTO;
 import com.example.aadhiStore.dto.InvalidInput;
 import com.example.aadhiStore.entity.BrokerMaster;
 import com.example.aadhiStore.repository.BrokerMasterRepository;
@@ -44,5 +45,9 @@ public class BrokerMasterService {
 
     public void deleteBroker(Long id) {
         brokerMasterRepository.deleteById(id);
+    }
+
+    public List<BrokerDTO> findAll() {
+        return brokerMasterRepository.findAllForDropdown();
     }
 }

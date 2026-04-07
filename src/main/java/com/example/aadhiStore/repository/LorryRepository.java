@@ -8,5 +8,10 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface LorryRepository extends JpaRepository<LorryMaster, Long> {
-    @Query("SELECT LorryDTO(l.id, l.name) FROM LorryMaster l")
-    List<LorryDTO> findAllForDropdown();}
+
+
+    @Query("SELECT new com.example.aadhiStore.dto.LorryDTO(l.id, l.name, l.code) FROM LorryMaster l")
+    List<LorryDTO> findAllForDropdown();
+
+
+}
