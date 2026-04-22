@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
 
 import java.util.Date;
 import java.util.List;
@@ -33,7 +35,8 @@ public class CashBill {
     @JoinColumn(name = "broker_id")
     private BrokerMaster broker;
 
-    @Column(name = "bill_no")
+    @Column(name = "bill_no", insertable = false, updatable = false)
+    @Generated(GenerationTime.INSERT)
     private String billNo;
 
     @Column(name = "bill_date")

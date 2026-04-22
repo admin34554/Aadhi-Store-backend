@@ -25,6 +25,7 @@ public class CreditBillService {
     }
 
     public CreditBill createCreditBill(CreditBill creditBill) {
+        creditBill.setBillNo(null);
         return creditBillRepository.save(creditBill);
     }
 }

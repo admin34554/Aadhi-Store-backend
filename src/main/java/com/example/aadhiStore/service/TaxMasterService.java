@@ -1,6 +1,7 @@
 package com.example.aadhiStore.service;
 
 import com.example.aadhiStore.dto.InvalidInput;
+import com.example.aadhiStore.entity.CustomerMaster;
 import com.example.aadhiStore.entity.TaxMaster;
 import com.example.aadhiStore.repository.TaxRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -44,4 +45,11 @@ public class TaxMasterService {
     public void deleteTax(Long id) {
         taxRepository.deleteById(id);
     }
+
+    public List<TaxMaster> getAllTaxesByFilter(String name) {
+         if (name == null) {
+                return taxRepository.findAll();
+            }
+            return taxRepository.findByNameContainingIgnoreCaseOrTaxCodeContainingIgnoreCase(name, name);
+        }
 }

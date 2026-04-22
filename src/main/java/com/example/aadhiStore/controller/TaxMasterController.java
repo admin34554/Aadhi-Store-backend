@@ -29,9 +29,9 @@ public class TaxMasterController {
     }
 
     @GetMapping(value = "/list-view")
-    private List<TaxMaster> getAllTaxes() {
+    private List<TaxMaster> getAllTaxes(@RequestParam(required = false) String name) {
         log.info("Fetched all entries successfully");
-        return taxMasterService.getAllTaxes();
+        return taxMasterService.getAllTaxesByFilter(name);
     }
 
     @GetMapping(value = "/{id}")

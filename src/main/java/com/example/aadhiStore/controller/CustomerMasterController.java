@@ -29,9 +29,9 @@ public class CustomerMasterController {
 
 
     @GetMapping("/list-view")
-    private List<CustomerMaster> getAllCustomers() {
+    private List<CustomerMaster> getAllCustomers(@RequestParam (required = false) String name) {
         log.info("Fetched all entries successfully");
-        return customerMasterService.getAllCustomers();
+        return customerMasterService.getAllCustomersByFilter(name);
     }
 
     @GetMapping("/{id}")

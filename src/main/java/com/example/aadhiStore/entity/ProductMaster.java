@@ -37,4 +37,8 @@ public class ProductMaster {
     @Column(name = "retail_rate")
     private Double retailRate;
 
+    @ManyToOne
+    @JoinColumn(name = "product_master_type_id")
+    private ProductTypeMaster productTypeMaster;
+
 }

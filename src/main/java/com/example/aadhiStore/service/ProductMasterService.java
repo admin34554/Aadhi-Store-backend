@@ -2,6 +2,7 @@ package com.example.aadhiStore.service;
 
 import com.example.aadhiStore.dto.InvalidInput;
 import com.example.aadhiStore.entity.ProductMaster;
+import com.example.aadhiStore.entity.ProductTypeMaster;
 import com.example.aadhiStore.repository.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,5 +44,10 @@ public class ProductMasterService {
 
     public void deleteProduct(Long id) {
         productRepository.deleteById(id);
+    }
+
+
+    public List<ProductMaster> searchByCodeOrName(String value) {
+        return productRepository.findByCodeContainingIgnoreCaseOrNameContainingIgnoreCase(value, value);
     }
 }

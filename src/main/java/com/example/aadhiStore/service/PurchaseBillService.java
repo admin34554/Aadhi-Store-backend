@@ -26,6 +26,7 @@ public class PurchaseBillService {
     }
 
     public PurchaseBill createPurchaseBill(PurchaseBill purchaseBill) {
+        purchaseBill.setPurchaseBillNo(null);
         return purchaseBillRepository.save(purchaseBill);
     }
 }

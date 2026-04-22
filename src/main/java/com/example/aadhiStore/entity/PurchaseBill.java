@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
 
 import java.util.Date;
 import java.util.List;
@@ -30,6 +32,10 @@ public class PurchaseBill {
 
     @Column(name = "purchase_type")
     private String purchaseType;
+
+    @Column(name = "purchase_bill_no", insertable = false, updatable = false)
+    @Generated(GenerationTime.INSERT)
+    private String purchaseBillNo;
 
     @Column(name = "po_no")
     private String poNo;

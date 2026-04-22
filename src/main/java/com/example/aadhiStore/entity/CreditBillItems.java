@@ -42,7 +42,7 @@ public class CreditBillItems {
     private String tax;
 
     @Column(name = "total")
-    private Long total;
+    private Double total;
 
     @Column(name = "br_no")
     private Long brNo;

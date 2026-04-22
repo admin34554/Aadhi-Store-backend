@@ -2,7 +2,9 @@ package com.example.aadhiStore.controller;
 
 
 import com.example.aadhiStore.entity.ProductMaster;
+import com.example.aadhiStore.entity.ProductTypeMaster;
 import com.example.aadhiStore.service.ProductMasterService;
+import com.example.aadhiStore.service.ProductTypeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,39 +19,35 @@ import java.util.List;
         "http://localhost:4200",
         "https://aathithanstore.netlify.app"
 })
-@RequestMapping("api/v1/product-master")
-public class ProductMasterController {
+@RequestMapping("/api/v1/product-type")
+public class ProductTypeController {
 
 
     private static final Logger log = LoggerFactory.getLogger(ProductMasterController.class);
     @Autowired
-    private final ProductMasterService productMasterService;
-
-    public ProductMasterController(ProductMasterService productMasterService) {
-        this.productMasterService = productMasterService;
-    }
+    private ProductTypeService productTypeService;
 
     @GetMapping(value = "/list-view")
-    private List<ProductMaster> getAllProducts() {
+    private List<ProductTypeMaster> getAllProducts(@RequestParam(required = false) String name) {
         log.info("Fetched all entries successfully");
-        return productMasterService.getAllProducts();
+        return productTypeService.getAllProductTypesByFilter(name);
     }
 
     @GetMapping(value = "/{id}")
-    private ProductMaster getProductById(@PathVariable Long id) {
-        return productMasterService.getProductById(id);
+    private ProductTypeMaster getProductById(@PathVariable Long id) {
+        return productTypeService.getProductType(id);
     }
 
     @PostMapping
-    private ResponseEntity<ProductMaster> createProduct(@RequestBody ProductMaster productMaster) {
-        ProductMaster createProduct = productMasterService.createProduct(productMaster);
+    private ResponseEntity<ProductTypeMaster> createProduct(@RequestBody ProductTypeMaster productMaster) {
+        ProductTypeMaster createProduct = productTypeService.createProductType(productMaster);
         log.info("Entry created successfully" + productMaster);
         return new ResponseEntity<>(createProduct, HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/{id}")
-    private ResponseEntity<ProductMaster> updateProduct(@PathVariable Long id, @RequestBody ProductMaster productMaster) {
-        ProductMaster updateProduct = productMasterService.updateProduct(id, productMaster);
+    private ResponseEntity<ProductTypeMaster> updateProduct(@PathVariable Long id, @RequestBody ProductTypeMaster productMaster) {
+        ProductTypeMaster updateProduct = productTypeService.updateProductType(id, productMaster);
         if (productMaster != null) {
             log.info("Entry updated successfully" + productMaster);
             return new ResponseEntity<>(updateProduct, HttpStatus.OK);
@@ -61,12 +59,9 @@ public class ProductMasterController {
     }
 
     @DeleteMapping(value = "/{id}")
-    private ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
-        productMasterService.deleteProduct(id);
+    private ResponseEntity<Void> deleteProductType(@PathVariable Long id) {
+        productTypeService.deleteProductType(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-    @GetMapping(value = "/search")
-    private List<ProductMaster> getBySearch(@RequestParam String code) {
-        return productMasterService.searchByCodeOrName(code);
-    }
+
 }
