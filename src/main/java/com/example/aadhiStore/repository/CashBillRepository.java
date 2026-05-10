@@ -12,4 +12,7 @@ public interface CashBillRepository extends JpaRepository<CashBill, Long> {
 
     List<CashBill> findByBillDateBetween(Date from, Date to);
     List<CashBill> findByBillDateAfter(Date from);
-    List<CashBill> findByBillDateBefore(Date to);}
+    List<CashBill> findByBillDateBefore(Date to);
+
+    CashBill findByBillNo(String billNo);
+}

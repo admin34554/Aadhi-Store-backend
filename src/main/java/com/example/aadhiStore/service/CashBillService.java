@@ -2,6 +2,7 @@ package com.example.aadhiStore.service;
 
 import com.example.aadhiStore.entity.BrokerMaster;
 import com.example.aadhiStore.entity.CashBill;
+import com.example.aadhiStore.entity.CashBillItems;
 import com.example.aadhiStore.repository.CashBillRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,15 @@ public class CashBillService {
     }
 
     public CashBill createCashBill(CashBill cashBill) {
+        if (cashBill.getItems() != null) {
+            for (CashBillItems item : cashBill.getItems()) {
+                item.setCashBill(cashBill);
+            }
+        }
         return cashBillRepository.save(cashBill);
+    }
+
+    public CashBill getCashBillByBillNo(String billNo) {
+        return cashBillRepository.findByBillNo(billNo);
     }
 }

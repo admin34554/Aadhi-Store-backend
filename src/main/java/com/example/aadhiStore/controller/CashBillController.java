@@ -26,11 +26,16 @@ public class CashBillController {
         return cashBillService.getAllCashBills();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/cb/{id}")
     private CashBill getCashBillById(@PathVariable Long id) {
         return cashBillService.getCashBillsById(id);
     }
 
+    @GetMapping("/bill-no/{billNo}")
+    public CashBill getCashBillByBillNo(@PathVariable String billNo) {
+        return cashBillService.getCashBillByBillNo(billNo);
+    }
+    
     @PostMapping
     private ResponseEntity<CashBill> createCashBills(@RequestBody CashBill cashBill) {
         CashBill createCash = cashBillService.createCashBill(cashBill);
