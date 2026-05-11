@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CreditBillRepository extends JpaRepository<CreditBill, Long> {
+    CreditBill findByBillNo(String billNo);
+
 }

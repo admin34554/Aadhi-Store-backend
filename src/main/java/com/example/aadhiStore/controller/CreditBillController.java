@@ -31,6 +31,11 @@ public class CreditBillController {
         return creditBillService.getCreditBillsById(id);
     }
 
+    @GetMapping("/bill-no/{billNo}")
+    public CreditBill getCreditBillByBillNo(@PathVariable String billNo) {
+        return creditBillService.getCreditBillByBillNo(billNo);
+    }
+
     @PostMapping
     private ResponseEntity<CreditBill> createCreditBills(@RequestBody CreditBill creditBill) {
         CreditBill createCredit = creditBillService.createCreditBill(creditBill);

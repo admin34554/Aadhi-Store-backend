@@ -1,6 +1,7 @@
 package com.example.aadhiStore.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Generated;
@@ -39,6 +40,7 @@ public class CreditBill {
     @Column(name = "bill_date")
     private Date billDate;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "creditBill", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CreditBillItems> items;
 

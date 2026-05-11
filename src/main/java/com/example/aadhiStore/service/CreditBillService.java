@@ -1,6 +1,8 @@
 package com.example.aadhiStore.service;
 
+import com.example.aadhiStore.entity.CashBillItems;
 import com.example.aadhiStore.entity.CreditBill;
+import com.example.aadhiStore.entity.CreditBillItems;
 import com.example.aadhiStore.repository.CreditBillRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
@@ -25,7 +27,15 @@ public class CreditBillService {
     }
 
     public CreditBill createCreditBill(CreditBill creditBill) {
-        creditBill.setBillNo(null);
+        if (creditBill.getItems() != null) {
+            for (CreditBillItems item : creditBill.getItems()) {
+                item.setCreditBill(creditBill);
+            }
+        }
         return creditBillRepository.save(creditBill);
     }
+
+    public CreditBill getCreditBillByBillNo(String billNo) {
+        return creditBillRepository.findByBillNo(billNo);
+        }
 }
