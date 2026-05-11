@@ -58,7 +58,7 @@ public class CashBillController {
         HttpHeaders headers = new HttpHeaders();
 
         headers.add("Content-Disposition",
-                "inline; filename=cashBill.pdf");
+                "attachment; filename=cashBill.pdf");
         return ResponseEntity.ok()
                 .headers(headers)
                 .contentType(MediaType.APPLICATION_PDF)
