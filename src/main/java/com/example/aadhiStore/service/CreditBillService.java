@@ -1,16 +1,21 @@
 package com.example.aadhiStore.service;
 
-import com.example.aadhiStore.entity.CashBillItems;
 import com.example.aadhiStore.entity.CreditBill;
 import com.example.aadhiStore.entity.CreditBillItems;
+import com.example.aadhiStore.entity.ProductMaster;
 import com.example.aadhiStore.repository.CreditBillRepository;
+import com.example.aadhiStore.repository.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class CreditBillService {
+
+    @Autowired
+    private ProductRepository productRepository;
 
     private final CreditBillRepository creditBillRepository;
 
@@ -28,12 +33,21 @@ public class CreditBillService {
 
     public CreditBill createCreditBill(CreditBill creditBill) {
         if (creditBill.getItems() != null) {
-            for (CreditBillItems item : creditBill.getItems()) {
-                item.setCreditBill(creditBill);
-            }
+            creditBill.getItems().forEach(item -> item.setCreditBill(creditBill));
         }
-        return creditBillRepository.save(creditBill);
-    }
+        for (CreditBillItems item : creditBill.getItems()) {
+            ProductMaster productMaster = productRepository.findByCode(item.getProductCode())
+                    .orElseThrow(() -> new RuntimeException("Product not found: " + item.getProductCode()));
+            double currentWeight = productMaster.getWeight() == null ? 0 : productMaster.getWeight();
+            double soldWeight = item.getQuantity();
+            if (currentWeight < soldWeight) {
+                throw new RuntimeException("Insufficient stock for product" + productMaster.getName());
+            }
+            productMaster.setWeight(currentWeight - soldWeight);
+            productRepository.save(productMaster);
+        }
+            return creditBillRepository.save(creditBill);
+        }
 
     public CreditBill getCreditBillByBillNo(String billNo) {
         return creditBillRepository.findByBillNo(billNo);
