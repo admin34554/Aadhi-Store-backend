@@ -3,6 +3,7 @@ package com.example.aadhiStore.service;
 import com.example.aadhiStore.entity.CreditBill;
 import com.example.aadhiStore.entity.CreditBillItems;
 import com.example.aadhiStore.entity.ProductMaster;
+import com.example.aadhiStore.exception.StockExceptions;
 import com.example.aadhiStore.repository.CreditBillRepository;
 import com.example.aadhiStore.repository.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -41,7 +42,7 @@ public class CreditBillService {
             double currentWeight = productMaster.getWeight() == null ? 0 : productMaster.getWeight();
             double soldWeight = item.getQuantity();
             if (currentWeight < soldWeight) {
-                throw new RuntimeException("Insufficient stock for product" + productMaster.getName());
+                throw new StockExceptions("Insufficient Stock for Product" + productMaster.getName());
             }
             productMaster.setWeight(currentWeight - soldWeight);
             productRepository.save(productMaster);
