@@ -50,6 +50,6 @@ public class TaxMasterService {
          if (name == null) {
                 return taxRepository.findAll();
             }
-            return taxRepository.findByNameContainingIgnoreCaseOrTaxCodeContainingIgnoreCase(name, name);
+            return taxRepository.findByNameContainingIgnoreCaseOrHsnCodeContainingIgnoreCase(name, name);
         }
 }

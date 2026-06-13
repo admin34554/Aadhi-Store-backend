@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
 
 @Entity
 @Getter
@@ -19,8 +21,9 @@ public class TaxMaster {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "tax_code")
-    private String taxCode;
+    @Column(name = "hsn_code", insertable = false, updatable = false)
+    @Generated(GenerationTime.INSERT)
+    private String hsnCode;
 
     @Column(name = "name")
     private String name;
@@ -33,4 +36,13 @@ public class TaxMaster {
 
     @Column(name = "group_name")
     private String groupName;
+
+    @Column(name = "cgst")
+    private String cgst;
+
+    @Column(name = "sgst")
+    private String sgst;
+
+    @Column(name = "igst")
+    private String igst;
 }

@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface TaxRepository extends JpaRepository<TaxMaster, Long> {
-    List<TaxMaster> findByNameContainingIgnoreCaseOrTaxCodeContainingIgnoreCase(String name, String name1);
+    List<TaxMaster> findByNameContainingIgnoreCaseOrHsnCodeContainingIgnoreCase(String name, String hsnCode);
 }
