@@ -1,9 +1,7 @@
 package com.example.aadhiStore.service;
 
-import com.example.aadhiStore.entity.CashBill;
-import com.example.aadhiStore.entity.CashBillItems;
-import com.example.aadhiStore.entity.CreditBill;
-import com.example.aadhiStore.entity.CreditBillItems;
+import com.example.aadhiStore.dto.DayBookDTO;
+import com.example.aadhiStore.entity.*;
 import com.lowagie.text.*;
 import com.lowagie.text.pdf.*;
 
@@ -212,6 +210,95 @@ public class PdfService {
 
             // REMARKS
             document.add(new Paragraph("Remarks : " + bill.getRemarks(), normalFont));
+
+            document.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return new ByteArrayInputStream(out.toByteArray());
+    }
+
+    public ByteArrayInputStream generateDayBook(DayBookDTO dto) {
+
+        Document document = new Document();
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+
+        try {
+            PdfWriter.getInstance(document, out);
+            document.open();
+
+            // Purchase Bills Section
+            document.add(new Paragraph("PURCHASE BILLS"));
+
+            PdfPTable purchaseTable = new PdfPTable(3);
+            purchaseTable.addCell("Bill No");
+            purchaseTable.addCell("Name");
+            purchaseTable.addCell("Date");
+
+            for (PurchaseBill bill : dto.getPurchaseBillList()) {
+                purchaseTable.addCell(
+                        bill.getPurchaseBillNo() != null ? bill.getPurchaseBillNo() : ""
+                );
+                purchaseTable.addCell(
+                        bill.getName() != null ? bill.getName() : ""
+                );
+                purchaseTable.addCell(
+                        bill.getPurchaseBillDate() != null
+                                ? bill.getPurchaseBillDate().toString()
+                                : ""
+                );
+            }
+
+            document.add(purchaseTable);
+
+            document.add(new Paragraph(" "));
+
+            // Cash Bills Section
+            document.add(new Paragraph("CASH BILLS"));
+
+            PdfPTable cashTable = new PdfPTable(3);
+            cashTable.addCell("Bill No");
+            cashTable.addCell("Name");
+            cashTable.addCell("Date");
+
+            for (CashBill bill : dto.getCashBillList()) {
+                cashTable.addCell(
+                        bill.getBillNo() != null ? bill.getBillNo() : ""
+                );
+                cashTable.addCell(
+                        bill.getName() != null ? bill.getName() : ""
+                );
+                cashTable.addCell(
+                        bill.getBillDate() != null
+                                ? bill.getBillDate().toString()
+                                : ""
+                );
+            }
+
+            document.add(cashTable);
+
+            document.add(new Paragraph(" "));
+
+            // Credit Bills Section
+            document.add(new Paragraph("CREDIT BILLS"));
+
+            PdfPTable creditTable = new PdfPTable(3);
+            creditTable.addCell("Bill No");
+            creditTable.addCell("Name");
+            creditTable.addCell("Date");
+
+            if (dto.getCreditBillsList() != null) {
+                for (CreditBill bill : dto.getCreditBillsList()) {
+                    creditTable.addCell(bill.getBillNo());
+                    creditTable.addCell(bill.getName());
+                    creditTable.addCell(bill.getBillDate().toString());
+                }
+            }
+
+
+            document.add(creditTable);
 
             document.close();
 

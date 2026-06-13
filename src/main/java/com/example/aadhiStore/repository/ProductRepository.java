@@ -12,4 +12,6 @@ public interface ProductRepository extends JpaRepository<ProductMaster, Long> {
     List<ProductMaster> findByCodeContainingIgnoreCaseOrNameContainingIgnoreCase(String value, String value1);
 
     Optional<ProductMaster> findByCode(String code);
+
+    Long countByName(String productName);
 }

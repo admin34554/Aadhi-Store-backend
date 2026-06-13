@@ -29,6 +29,8 @@ public class ProductMasterService {
     }
 
     public ProductMaster createProduct(ProductMaster productMaster) {
+        String code = generateProductCode(productMaster.getName());
+        productMaster.setCode(code);
         return productRepository.save(productMaster);
     }
 
@@ -49,5 +51,11 @@ public class ProductMasterService {
 
     public List<ProductMaster> searchByCodeOrName(String value) {
         return productRepository.findByCodeContainingIgnoreCaseOrNameContainingIgnoreCase(value, value);
+    }
+
+    public String generateProductCode(String productName) {
+        String prefix = productName.substring(0, 1).toUpperCase();
+        Long count = productRepository.countByName(productName);
+        return prefix + "-" + String.format("%03d", count + 1);
     }
 }

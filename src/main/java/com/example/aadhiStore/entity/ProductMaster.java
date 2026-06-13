@@ -34,8 +34,23 @@ public class ProductMaster {
     @Column(name = "weight")
     private Double weight;
 
-    @Column(name = "retail_rate")
-    private Double retailRate;
+//    @Column(name = "retail_rate")
+//    private Double retailRate;
+
+    @Column(name = "hsn_no")
+    private String hsnNo;
+
+    @Column(name = "rate")
+    private Double rate;
+
+    @Column(name = "mrp")
+    private Double mrp;
+
+    @Column(name = "sell_rate")
+    private Double sellRate;
+
+    @Column(name = "discount")
+    private Double discount;
 
     @ManyToOne
     @JoinColumn(name = "product_master_type_id")
