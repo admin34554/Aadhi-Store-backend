@@ -34,8 +34,8 @@ public class ProductMaster {
     @Column(name = "weight")
     private Double weight;
 
-//    @Column(name = "retail_rate")
-//    private Double retailRate;
+    @Column(name = "no_of_packs")
+    private Double noOfPacks;
 
     @Column(name = "hsn_no")
     private String hsnNo;
