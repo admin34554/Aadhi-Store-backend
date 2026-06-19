@@ -47,7 +47,7 @@ public class CashBillItems {
     private Double total;
 
     @Column(name = "br_no")
-    private Long brNo;
+    private String brNo;
 
     @Column(name = "sur_charge")
     private String surCh;

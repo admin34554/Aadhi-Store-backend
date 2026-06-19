@@ -53,7 +53,7 @@ public class CashBillService {
                 double cgst = taxMaster.getCgst() == null ? 0 : Double.parseDouble(taxMaster.getCgst());
                 double sgst = taxMaster.getSgst() == null ? 0 : Double.parseDouble(taxMaster.getSgst());
                 item.setTax(String.valueOf(cgst + sgst));
-                item.setBrNo(Long.valueOf(taxMaster.getHsnCode()));
+                item.setBrNo(taxMaster.getHsnCode());
                 item.setTax(taxMaster.getName());
             }
             productMaster.setNoOfPacks(currentWeight - soldWeight);

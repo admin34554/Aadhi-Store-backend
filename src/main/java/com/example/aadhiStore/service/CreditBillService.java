@@ -3,9 +3,11 @@ package com.example.aadhiStore.service;
 import com.example.aadhiStore.entity.CreditBill;
 import com.example.aadhiStore.entity.CreditBillItems;
 import com.example.aadhiStore.entity.ProductMaster;
+import com.example.aadhiStore.entity.TaxMaster;
 import com.example.aadhiStore.exception.StockExceptions;
 import com.example.aadhiStore.repository.CreditBillRepository;
 import com.example.aadhiStore.repository.ProductRepository;
+import com.example.aadhiStore.repository.TaxRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,9 @@ public class CreditBillService {
     private ProductRepository productRepository;
 
     private final CreditBillRepository creditBillRepository;
+
+    @Autowired
+    private TaxRepository taxRepository;
 
     public CreditBillService(CreditBillRepository creditBillRepository) {
         this.creditBillRepository = creditBillRepository;
@@ -43,6 +48,14 @@ public class CreditBillService {
             double soldWeight = item.getQuantity();
             if (currentWeight < soldWeight) {
                 throw new StockExceptions("Insufficient Stock for Product" + productMaster.getName());
+            }
+            TaxMaster taxMaster = taxRepository.findFirstByNameContainingIgnoreCase(productMaster.getName());
+            if (taxMaster == null) {
+                double cgst = taxMaster.getCgst() == null ? 0 : Double.parseDouble(taxMaster.getCgst());
+                double sgst = taxMaster.getSgst() == null ? 0 : Double.parseDouble(taxMaster.getSgst());
+                item.setTax(String.valueOf(cgst + sgst));
+                item.setBrNo(taxMaster.getHsnCode());
+                item.setTax(taxMaster.getName());
             }
             productMaster.setWeight(currentWeight - soldWeight);
             productRepository.save(productMaster);
