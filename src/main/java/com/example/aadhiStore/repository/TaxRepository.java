@@ -9,4 +9,6 @@ public interface TaxRepository extends JpaRepository<TaxMaster, Long> {
     List<TaxMaster> findByNameContainingIgnoreCaseOrHsnCodeContainingIgnoreCase(String name, String hsnCode);
 
     TaxMaster findFirstByNameContainingIgnoreCase(String name);
+
+    TaxMaster findFirstByHsnCodeContainingIgnoreCase(String hsnCode);
 }

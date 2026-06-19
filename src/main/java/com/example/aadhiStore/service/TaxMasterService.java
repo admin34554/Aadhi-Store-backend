@@ -52,4 +52,8 @@ public class TaxMasterService {
             }
             return taxRepository.findByNameContainingIgnoreCaseOrHsnCodeContainingIgnoreCase(name, name);
         }
+
+        public TaxMaster getAllTaxesByHsnCode(String hsnCode) {
+            return taxRepository.findFirstByHsnCodeContainingIgnoreCase(hsnCode);
+        }
 }

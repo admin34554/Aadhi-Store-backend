@@ -64,4 +64,16 @@ public class TaxMasterController {
         taxMasterService.deleteTax(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @GetMapping("/hsn/{hsnCode}")
+    public ResponseEntity<TaxMaster> getByHsnCode(@PathVariable String hsnCode) {
+
+        TaxMaster taxMaster = taxMasterService.getAllTaxesByHsnCode(hsnCode);
+
+        if (taxMaster == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(taxMaster);
+    }
 }
