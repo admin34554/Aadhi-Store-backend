@@ -28,9 +28,9 @@ public class CustomerMasterController {
     }
 
 
-    @GetMapping("/list-view/{companyId}")
+    @GetMapping("/list-view")
     private List<CustomerMaster> getAllCustomers(@RequestParam (required = false) String name,
-                                                 @PathVariable (required = false) Long companyId) {
+                                                 @RequestParam (required = false) Long companyId) {
         log.info("Fetched all entries successfully");
         return customerMasterService.getAllCustomersByFilter(name, companyId);
     }
