@@ -2,11 +2,14 @@ package com.example.aadhiStore.entity;
 
 
 import com.example.aadhiStore.dto.Type;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -66,5 +69,9 @@ public class SupplierMaster {
 
     @Column(name = "active")
     private boolean active;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "supplierMaster", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<SupplierBankDetails> bankDetails;
 
 }
