@@ -45,10 +45,10 @@ public class CustomerMasterService {
         customerMasterRepository.deleteById(id);
     }
 
-    public List<CustomerMaster> getAllCustomersByFilter(String name) {
-        if (name == null) {
-             return customerMasterRepository.findAll();
+    public List<CustomerMaster> getAllCustomersByFilter(String name, Long companyId) {
+        if (name == null || name.trim().isEmpty()) {
+             return customerMasterRepository.findByCompanyMasterId(companyId);
         }
-       return customerMasterRepository.findByFullNameContainingIgnoreCaseOrCodeContainingIgnoreCase(name, name);
+       return customerMasterRepository.findByCompanyMasterIdAndFullNameContainingIgnoreCaseOrCompanyMasterIdAndCodeContainingIgnoreCase(companyId, name, companyId, name);
     }
 }

@@ -75,4 +75,8 @@ public class CustomerMaster {
 
     @Column(name = "active")
     private boolean active;
+
+    @ManyToOne
+    @JoinColumn(name = "company_id")
+    private CompanyMaster companyMaster;
 }

@@ -28,10 +28,11 @@ public class CustomerMasterController {
     }
 
 
-    @GetMapping("/list-view")
-    private List<CustomerMaster> getAllCustomers(@RequestParam (required = false) String name) {
+    @GetMapping("/list-view/{companyId}")
+    private List<CustomerMaster> getAllCustomers(@RequestParam (required = false) String name,
+                                                 @PathVariable (required = false) Long companyId) {
         log.info("Fetched all entries successfully");
-        return customerMasterService.getAllCustomersByFilter(name);
+        return customerMasterService.getAllCustomersByFilter(name, companyId);
     }
 
     @GetMapping("/{id}")

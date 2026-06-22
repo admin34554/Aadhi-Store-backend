@@ -7,5 +7,7 @@ import java.util.List;
 
 public interface CustomerMasterRepository extends JpaRepository<CustomerMaster, Long> {
 
-    List<CustomerMaster> findByFullNameContainingIgnoreCaseOrCodeContainingIgnoreCase(String fullName, String code);
+    List<CustomerMaster> findByCompanyMasterIdAndFullNameContainingIgnoreCaseOrCompanyMasterIdAndCodeContainingIgnoreCase(Long companyId1, String fullName, Long companyId2, String code);
+
+    List<CustomerMaster> findByCompanyMasterId(Long companyId);
 }
