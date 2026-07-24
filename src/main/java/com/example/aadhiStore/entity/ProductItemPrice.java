@@ -28,6 +28,7 @@ public class ProductItemPrice {
     @JsonIgnore
     private ProductMasterNew productMasterNew;
 
+
     @Column(name = "batch_code")
     private String batchCode;
 
