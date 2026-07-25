@@ -25,7 +25,7 @@ public class CustomerMaster {
     private String code;
 
     @Column(name = "name")
-    private String fullName;
+    private String name;
 
     @Column(name = "door_no")
     private String doorNumber;

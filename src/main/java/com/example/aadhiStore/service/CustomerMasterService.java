@@ -49,6 +49,6 @@ public class CustomerMasterService {
         if (name == null || name.trim().isEmpty()) {
              return customerMasterRepository.findByCompanyMasterId(companyId);
         }
-       return customerMasterRepository.findByCompanyMasterIdAndFullNameContainingIgnoreCaseOrCompanyMasterIdAndCodeContainingIgnoreCase(companyId, name, companyId, name);
+       return customerMasterRepository.findByCompanyMasterIdAndNameContainingIgnoreCaseOrCompanyMasterIdAndCodeContainingIgnoreCase(companyId, name, companyId, name);
     }
 }
