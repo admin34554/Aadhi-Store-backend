@@ -46,9 +46,24 @@ public class CustomerMasterService {
     }
 
     public List<CustomerMaster> getAllCustomersByFilter(String name, Long companyId) {
-        if (name == null || name.trim().isEmpty()) {
-             return customerMasterRepository.findByCompanyMasterId(companyId);
+
+        // No companyId provided
+        if (companyId == null) {
+
+            if (name == null || name.trim().isEmpty()) {
+                return customerMasterRepository.findAll();
+            }
+
+            return customerMasterRepository.findByNameContainingIgnoreCaseOrCodeContainingIgnoreCase(name, name);
         }
-       return customerMasterRepository.findByCompanyMasterIdAndNameContainingIgnoreCaseOrCompanyMasterIdAndCodeContainingIgnoreCase(companyId, name, companyId, name);
+
+        // companyId provided
+        if (name == null || name.trim().isEmpty()) {
+            return customerMasterRepository.findByCompanyMasterId(companyId);
+        }
+
+        return customerMasterRepository
+                .findByCompanyMasterIdAndNameContainingIgnoreCaseOrCompanyMasterIdAndCodeContainingIgnoreCase(
+                        companyId, name, companyId, name);
     }
 }

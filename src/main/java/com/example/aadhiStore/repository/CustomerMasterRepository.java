@@ -10,4 +10,8 @@ public interface CustomerMasterRepository extends JpaRepository<CustomerMaster, 
     List<CustomerMaster> findByCompanyMasterIdAndNameContainingIgnoreCaseOrCompanyMasterIdAndCodeContainingIgnoreCase(Long companyId1, String fullName, Long companyId2, String code);
 
     List<CustomerMaster> findByCompanyMasterId(Long companyId);
+
+    List<CustomerMaster> findAll();
+
+    List<CustomerMaster> findByNameContainingIgnoreCaseOrCodeContainingIgnoreCase(String name, String code);
 }
