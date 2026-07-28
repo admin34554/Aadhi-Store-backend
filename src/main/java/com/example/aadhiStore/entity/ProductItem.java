@@ -1,14 +1,14 @@
 package com.example.aadhiStore.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "product_item")
@@ -33,14 +33,23 @@ public class ProductItem {
     @Column(name = "item_description")
     private String itemDescription;
 
-    @JsonBackReference
-    @ManyToOne
+    @OneToMany(
+            mappedBy = "productItem",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private Set<ProductItemPrice> productItemPrice = new HashSet<>();
+
+    @OneToMany(
+            mappedBy = "productItem",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    @JsonIgnore
+    private List<PurchaseItem> purchaseItems;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_master_new_id")
     @JsonIgnore
     private ProductMasterNew productMasterNew;
-
-    @OneToMany(mappedBy = "productItem", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
-    private List<ProductItemPrice> productItemPrice;
-
 }

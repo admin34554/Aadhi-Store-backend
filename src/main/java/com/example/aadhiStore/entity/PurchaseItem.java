@@ -1,5 +1,6 @@
 package com.example.aadhiStore.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,7 +32,7 @@ public class PurchaseItem {
     private Double balanceQuantity;
 
     @Column(name = "quantity")
-    private Double quantity;
+    private Long quantity;
 
     @Column(name = "rate")
     private Double rate;
@@ -45,5 +46,12 @@ public class PurchaseItem {
     @ManyToOne
     @JoinColumn(name = "purchase_bill_id")
     private PurchaseBill purchaseBill;
+
+    @Column(name = "product_item_id", insertable = false, updatable = false)
+    private Long productItemId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_item_id")
+    private ProductItem productItem;
 
 }

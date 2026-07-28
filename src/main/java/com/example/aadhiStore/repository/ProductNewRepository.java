@@ -13,8 +13,15 @@ import java.util.Optional;
 @Repository
 public interface ProductNewRepository extends JpaRepository<ProductMasterNew, Long> {
 
-    List<ProductMasterNew> findByProductCodeContainingIgnoreCaseOrProductNameContainingIgnoreCase(String value, String value1);
-
+    @Query("""
+SELECT DISTINCT p
+FROM ProductMasterNew p
+LEFT JOIN FETCH p.productItems pi
+LEFT JOIN FETCH pi.productItemPrice
+WHERE LOWER(p.productCode) LIKE LOWER(CONCAT('%', :value, '%'))
+   OR LOWER(p.productName) LIKE LOWER(CONCAT('%', :value, '%'))
+""")
+    List<ProductMasterNew> searchProducts(String value);
 
     @Query("""
         SELECT MAX(p.productCode)

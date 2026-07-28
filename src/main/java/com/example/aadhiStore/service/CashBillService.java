@@ -41,8 +41,11 @@ public class CashBillService {
         for (CashBillItems item : cashBill.getItems()) {
             ProductMasterNew productMaster = productRepository.findByProductCode(item.getProductCode());
             ProductItem productItem = productMaster.getProductItems()
-                    .stream().filter(productItem1 -> productItem1.getItemName().equalsIgnoreCase(item.getItemName())).findFirst()
-                    .orElseThrow(() -> new RuntimeException("Product Item not found: " + item.getItemName()));
+                    .stream()
+                    .filter(pi -> pi.getId().equals(item.getProductItemId()))
+                    .findFirst()
+                    .orElseThrow(() ->
+                            new RuntimeException("Product Item not found: " + item.getProductItemId()));
             ProductItemPrice productItemPrice = productItem.getProductItemPrice()
                     .stream().findFirst().orElseThrow(()-> new RuntimeException("Price Details not found"));
             long currentWeight = productItemPrice.getQuantity() == null ? 0 : productItemPrice.getQuantity();

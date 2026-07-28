@@ -1,8 +1,7 @@
 package com.example.aadhiStore.service;
 
-import com.example.aadhiStore.entity.CashBill;
-import com.example.aadhiStore.entity.PurchaseBill;
-import com.example.aadhiStore.entity.PurchaseItem;
+import com.example.aadhiStore.entity.*;
+import com.example.aadhiStore.repository.ProductNewRepository;
 import com.example.aadhiStore.repository.ProductRepository;
 import com.example.aadhiStore.repository.PurchaseBillRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -19,6 +18,9 @@ public class PurchaseBillService {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private ProductNewRepository productNewRepository;
 
     public PurchaseBillService(PurchaseBillRepository purchaseBillRepository) {
         this.purchaseBillRepository = purchaseBillRepository;
@@ -46,24 +48,33 @@ public class PurchaseBillService {
 
             for (PurchaseItem item : savedBill.getItems()) {
 
-                productRepository.findByCode(item.getProductCode())
-                        .ifPresent(product -> {
+                ProductMasterNew productMaster =
+                        productNewRepository.findByProductCode(item.getProductCode());
 
-                            Double currentPacks =
-                                    product.getNoOfPacks() == null
-                                            ? 0.0
-                                            : product.getNoOfPacks();
+                if (productMaster == null) {
+                    throw new RuntimeException("Product not found : " + item.getProductCode());
+                }
 
-                            Double purchasedQty =
-                                    item.getQuantity() == null
-                                            ? 0.0
-                                            : item.getQuantity();
+                ProductItem productItem = productMaster.getProductItems()
+                        .stream()
+                        .filter(pi -> pi.getId().equals(item.getProductItem().getId()))
+                        .findFirst()
+                        .orElseThrow(() ->
+                                new RuntimeException("Product Item not found : "
+                                        + item.getProductItem().getId()));
 
-                            product.setNoOfPacks(currentPacks + purchasedQty);
+                ProductItemPrice price = productItem.getProductItemPrice()
+                        .stream()
+                        .findFirst()
+                        .orElseThrow(() ->
+                                new RuntimeException("Price details not found"));
 
-                            productRepository.save(product);
-                        });
+                long currentQty = price.getQuantity() == null ? 0 : price.getQuantity();
+                long purchaseQty = item.getQuantity() == null ? 0 : item.getQuantity();
+
+                price.setQuantity(currentQty + purchaseQty);
             }
+            return purchaseBillRepository.save(savedBill);
         }
 
         return savedBill;

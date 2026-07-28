@@ -1,6 +1,6 @@
 package com.example.aadhiStore.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -40,14 +40,10 @@ public class ProductMasterNew {
     @Column(name = "product_code")
     private String productCode;
 
-//    @Column(name = "quantity")
-//    private Double quantity;
-
-    @JsonManagedReference
-    @OneToMany(mappedBy = "productMasterNew", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(
+            mappedBy = "productMasterNew",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
     private List<ProductItem> productItems;
-
-    @JsonManagedReference
-    @OneToMany(mappedBy = "productMasterNew", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ProductItemPrice> productItemPrice;
 }

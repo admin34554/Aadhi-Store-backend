@@ -1,6 +1,5 @@
 package com.example.aadhiStore.entity;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -18,16 +17,10 @@ public class ProductItemPrice {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_item_id")
     @JsonIgnore
     private ProductItem productItem;
-
-    @ManyToOne
-    @JoinColumn(name = "product_master_new_id")
-    @JsonIgnore
-    private ProductMasterNew productMasterNew;
-
 
     @Column(name = "batch_code")
     private String batchCode;

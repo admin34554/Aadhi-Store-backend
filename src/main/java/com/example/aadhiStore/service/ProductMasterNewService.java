@@ -1,6 +1,7 @@
 package com.example.aadhiStore.service;
 
 import com.example.aadhiStore.dto.ProductDTO;
+import com.example.aadhiStore.entity.ProductItemPrice;
 import com.example.aadhiStore.entity.ProductMasterNew;
 import com.example.aadhiStore.entity.TaxMasterNew;
 import com.example.aadhiStore.repository.ProductNewRepository;
@@ -39,14 +40,14 @@ public class ProductMasterNewService {
 
     public List<ProductDTO> searchByCodeOrName(String value) {
 
-        return productNewRepository
-                .findByProductCodeContainingIgnoreCaseOrProductNameContainingIgnoreCase(value, value)
+        return productNewRepository.searchProducts(value)
                 .stream()
                 .map(product -> {
 
-                    List<TaxMasterNew> taxes = taxMasterRepository.findByHsnCode(product.getHsnCode());
+                    List<TaxMasterNew> taxes =
+                            taxMasterRepository.findByHsnCode(product.getHsnCode());
 
-                    TaxMasterNew tax = taxes.isEmpty() ? null : taxes.isEmpty() ? null :taxes.get(0);
+                    TaxMasterNew tax = taxes.isEmpty() ? null : taxes.get(0);
 
                     return convertToDTO(product, tax);
                 })
@@ -65,13 +66,28 @@ public class ProductMasterNewService {
         dto.setHsnCode(product.getHsnCode());
         dto.setProductCode(product.getProductCode());
 
-        dto.setProductItems(product.getProductItems());
-        dto.setProductItemPrice(product.getProductItemPrice());
+        if (product.getProductItems() != null) {
+
+            product.getProductItems().forEach(item -> {
+
+                item.setProductMasterNew(null);
+
+                if (item.getProductItemPrice() != null) {
+                    item.getProductItemPrice().forEach(price -> {
+                        price.setProductItem(null);
+                    });
+                }
+
+                item.setPurchaseItems(null);
+            });
+
+            dto.setProductItems(product.getProductItems());
+        }
+
         dto.setTaxMasterNew(tax);
 
         return dto;
     }
-
     private String generateProductCode(String productName) {
 
         String prefix = productName.substring(0, 1).toUpperCase();

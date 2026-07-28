@@ -51,4 +51,6 @@ public class CreditBillItems {
 
     @Column(name = "sur_charge")
     private String surCh;
+
+    private Long productItemId;
 }
