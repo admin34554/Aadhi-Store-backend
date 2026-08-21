@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin("https://aathithanstore.netlify.app")
 @RequestMapping("/api/v1/auth")
 public class LoginController {
 
