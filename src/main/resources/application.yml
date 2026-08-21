@@ -8,11 +8,19 @@ spring:
       max-file-size: 10MB
       max-request-size: 10MB
 
-
 server:
   port: ${PORT:8080}
 
+jwt:
+  secret: 4f2d8e7c9b1a6d5e8f3c7a9b1d2e4f6a8c9e1b3d5f7a9c2e4b6d8f1a3c5e7b9
+  expiration: 86400000
+
+
 logging:
   file:
-    path: logs/
-    name: logs/application.log
+    path: logs
+    name: application.log
+    level:
+    org.springframework.security: DEBUG
+
+
