@@ -1,11 +1,13 @@
 package com.example.aadhiStore.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -27,6 +29,10 @@ public class ProductTypeMaster {
     private String code;
 
     @OneToMany(mappedBy = "productTypeMaster", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ProductMaster> productMaster;
+    private List<ProductMaster> productMaster = new ArrayList<>();
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_master_new_id")
+    @JsonIgnore
+    private ProductMasterNew productMasterNew;
 }

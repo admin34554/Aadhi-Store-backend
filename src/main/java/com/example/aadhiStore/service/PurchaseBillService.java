@@ -1,9 +1,7 @@
 package com.example.aadhiStore.service;
 
 import com.example.aadhiStore.entity.*;
-import com.example.aadhiStore.repository.ProductNewRepository;
-import com.example.aadhiStore.repository.ProductRepository;
-import com.example.aadhiStore.repository.PurchaseBillRepository;
+import com.example.aadhiStore.repository.*;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +19,12 @@ public class PurchaseBillService {
 
     @Autowired
     private ProductNewRepository productNewRepository;
+
+    @Autowired
+    private StockMasterRepository stockMasterRepository;
+
+    @Autowired
+    private ProductItemPriceRepository productItemPriceRepository;
 
     public PurchaseBillService(PurchaseBillRepository purchaseBillRepository) {
         this.purchaseBillRepository = purchaseBillRepository;
@@ -73,6 +77,15 @@ public class PurchaseBillService {
                 long purchaseQty = item.getQuantity() == null ? 0 : item.getQuantity();
 
                 price.setQuantity(currentQty + purchaseQty);
+                StockMaster stockMaster = stockMasterRepository.findByItemName(productItem.getItemName()).
+                        orElseThrow(() -> new RuntimeException("Stock master not found" + productItem.getItemName()));
+
+                long currentStockQty = stockMaster.getQuantity() == null ? 0 : stockMaster.getQuantity();
+                long purchaseStockQty = item.getQuantity() == null ? 0 : item.getQuantity();
+                stockMaster.setQuantity(currentStockQty + purchaseStockQty);
+                stockMasterRepository.save(stockMaster);
+                productNewRepository.save(productMaster);
+                productItemPriceRepository.save(price);
             }
             return purchaseBillRepository.save(savedBill);
         }

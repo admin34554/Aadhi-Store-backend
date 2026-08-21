@@ -2,6 +2,7 @@ package com.example.aadhiStore.dto;
 
 import com.example.aadhiStore.entity.ProductItem;
 import com.example.aadhiStore.entity.ProductItemPrice;
+import com.example.aadhiStore.entity.StockMaster;
 import com.example.aadhiStore.entity.TaxMasterNew;
 import jakarta.persistence.Column;
 import lombok.Getter;
@@ -24,6 +25,7 @@ public class ProductDTO {
     private String productCode;
     private List<ProductItem> productItems;
     private List<ProductItemPrice> productItemPrice;
+    private List<StockMaster> stockMasters;
     private TaxMasterNew taxMasterNew;
 
 }

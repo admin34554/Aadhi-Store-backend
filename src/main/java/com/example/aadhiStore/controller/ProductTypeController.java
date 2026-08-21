@@ -38,6 +38,11 @@ public class ProductTypeController {
         return productTypeService.getProductType(id);
     }
 
+    @GetMapping("/byProductType")
+    public List<ProductTypeMaster> getProductTypeByProductType(@RequestParam String productType) {
+        return productTypeService.getByProductType(productType);
+    }
+
     @PostMapping
     private ResponseEntity<ProductTypeMaster> createProduct(@RequestBody ProductTypeMaster productMaster) {
         ProductTypeMaster createProduct = productTypeService.createProductType(productMaster);

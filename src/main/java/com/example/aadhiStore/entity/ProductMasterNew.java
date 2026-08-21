@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -40,10 +41,17 @@ public class ProductMasterNew {
     @Column(name = "product_code")
     private String productCode;
 
+    @Column(name = "product_type")
+    private String productType;
+
     @OneToMany(
             mappedBy = "productMasterNew",
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private List<ProductItem> productItems;
+    private List<ProductItem> productItems = new ArrayList<>();
+
+    @OneToMany(mappedBy = "productMasterNew", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProductTypeMaster> productTypeMasters = new ArrayList<>();
+
 }

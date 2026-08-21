@@ -9,4 +9,6 @@ public interface ProductTypeRepository extends JpaRepository<ProductTypeMaster, 
 
 
     List<ProductTypeMaster> findByProductTypeContainingIgnoreCaseOrCodeContainingIgnoreCase(String name, String code);
+
+    List<ProductTypeMaster> findByProductType(String productType);
 }

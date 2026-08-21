@@ -53,9 +53,9 @@ public class ProductMasterController {
         return new ResponseEntity<>(createProduct, HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/{id}")
-    private ResponseEntity<ProductMaster> updateProduct(@PathVariable Long id, @RequestBody ProductMaster productMaster) {
-        ProductMaster updateProduct = productMasterService.updateProduct(id, productMaster);
+    @PutMapping(value = "/product-new/{id}")
+    private ResponseEntity<ProductMasterNew> updateProduct(@PathVariable Long id, @RequestBody ProductMasterNew productMaster) {
+        ProductMasterNew updateProduct = productMasterNewService.updateProduct(id, productMaster);
         if (productMaster != null) {
             log.info("Entry updated successfully" + productMaster);
             return new ResponseEntity<>(updateProduct, HttpStatus.OK);

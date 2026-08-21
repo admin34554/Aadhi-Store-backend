@@ -52,4 +52,8 @@ public class ProductTypeService {
         }
         return productTypeRepository.findByProductTypeContainingIgnoreCaseOrCodeContainingIgnoreCase(name, name);
     }
+
+    public List<ProductTypeMaster> getByProductType(String productType) {
+        return productTypeRepository.findByProductType(productType);
+    }
 }

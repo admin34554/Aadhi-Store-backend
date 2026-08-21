@@ -49,6 +49,18 @@ public class CashBillController {
         return new ResponseEntity<>(createCash, HttpStatus.CREATED);
     }
 
+    @PutMapping("/{id}")
+    private ResponseEntity<CashBill> updateCashBill(@PathVariable Long id, @RequestBody CashBill cashBill) {
+        CashBill updateCash = cashBillService.updateCashBill(id, cashBill);
+        return new ResponseEntity<>(updateCash, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    private ResponseEntity<Void> deleteBill(@PathVariable Long id) {
+        cashBillService.deleteCashBill(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
     @GetMapping("/pdf/{billNo}")
     public ResponseEntity<byte[]> generatePdf(@PathVariable String billNo) {
 

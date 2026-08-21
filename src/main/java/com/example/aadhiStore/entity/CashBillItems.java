@@ -52,6 +52,7 @@ public class CashBillItems {
     @Column(name = "sur_charge")
     private String surCh;
 
+    @Column(name = "product_item_id")
     private Long productItemId;
 
 
