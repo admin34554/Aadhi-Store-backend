@@ -7,6 +7,7 @@ import com.example.aadhiStore.repository.ProductTypeRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -54,6 +55,16 @@ public class ProductTypeService {
     }
 
     public List<ProductTypeMaster> getByProductType(String productType) {
-        return productTypeRepository.findByProductType(productType);
+
+        return productTypeRepository.findByProductTypeContainingIgnoreCase(productType)
+                .stream()
+                .collect(Collectors.toMap(
+                        ProductTypeMaster::getProductType,
+                        product -> product,
+                        (existing, duplicate) -> existing
+                ))
+                .values()
+                .stream()
+                .toList();
     }
 }
