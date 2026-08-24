@@ -106,9 +106,7 @@ public class DayBookService {
 
         dtos.setCashBillList(cashBillDTOList);
         dtos.setPurchaseBillList(purchaseBillDTOList);
-
-        // Until credit bills are fetched
-        dtos.setCreditBillsList(Collections.emptyList());
+        dtos.setCreditBillsList(creditBillDTOList);
 
         return dtos;
         }
