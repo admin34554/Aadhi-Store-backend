@@ -17,8 +17,8 @@ import java.util.List;
 @NoArgsConstructor
 public class DayBookDTO {
 
-    private List<PurchaseBill> purchaseBillList;
-    private List<CashBill> cashBillList;
-    private List<CreditBill> creditBillsList;
+    private List<PurchaseBillDTO> purchaseBillList;
+    private List<CashBillDTO> cashBillList;
+    private List<CreditBillDTO> creditBillsList;
 
 }

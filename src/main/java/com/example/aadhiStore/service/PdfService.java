@@ -1,6 +1,9 @@
 package com.example.aadhiStore.service;
 
+import com.example.aadhiStore.dto.CashBillDTO;
+import com.example.aadhiStore.dto.CreditBillDTO;
 import com.example.aadhiStore.dto.DayBookDTO;
+import com.example.aadhiStore.dto.PurchaseBillDTO;
 import com.example.aadhiStore.entity.*;
 import com.lowagie.text.*;
 import com.lowagie.text.pdf.*;
@@ -237,7 +240,7 @@ public class PdfService {
             purchaseTable.addCell("Name");
             purchaseTable.addCell("Date");
 
-            for (PurchaseBill bill : dto.getPurchaseBillList()) {
+            for (PurchaseBillDTO bill : dto.getPurchaseBillList()) {
                 purchaseTable.addCell(
                         bill.getPurchaseBillNo() != null ? bill.getPurchaseBillNo() : ""
                 );
@@ -263,7 +266,7 @@ public class PdfService {
             cashTable.addCell("Name");
             cashTable.addCell("Date");
 
-            for (CashBill bill : dto.getCashBillList()) {
+            for (CashBillDTO bill : dto.getCashBillList()) {
                 cashTable.addCell(
                         bill.getBillNo() != null ? bill.getBillNo() : ""
                 );
@@ -290,7 +293,7 @@ public class PdfService {
             creditTable.addCell("Date");
 
             if (dto.getCreditBillsList() != null) {
-                for (CreditBill bill : dto.getCreditBillsList()) {
+                for (CreditBillDTO bill : dto.getCreditBillsList()) {
                     creditTable.addCell(bill.getBillNo());
                     creditTable.addCell(bill.getName());
                     creditTable.addCell(bill.getBillDate().toString());
