@@ -12,6 +12,9 @@ public interface StockMasterRepository extends JpaRepository<StockMaster,Long> {
 
     List<StockMaster> findByItemNameIgnoreCase(String itemName);
 
+    Optional<StockMaster> findByitemNameIgnoreCase(String itemName);
+
+
     Optional<StockMaster> findByItemName(String itemName);
 
 }

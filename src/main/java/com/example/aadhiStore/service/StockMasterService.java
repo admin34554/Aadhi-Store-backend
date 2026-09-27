@@ -28,8 +28,7 @@ public class StockMasterService {
     @Transactional
     public StockMaster saveStock(StockMaster stockMaster) {
 
-        ProductItem productItem =
-                productItemRepository.findByItemNameIgnoreCase(stockMaster.getItemName())
+        ProductItem productItem = productItemRepository.findByItemNameIgnoreCase(stockMaster.getItemName())
                         .orElseThrow(() -> new RuntimeException(
                                 "Product Item not found: " + stockMaster.getItemName()
                         ));
@@ -43,27 +42,64 @@ public class StockMasterService {
 
             productItemPrice = existingPrice.get();
 
-            productItemPrice.setQuantity(stockMaster.getQuantity());
-            productItemPrice.setMrp(stockMaster.getMrp());
-            productItemPrice.setMsp(stockMaster.getMsp());
+
+            long oldQuantity = productItemPrice.getQuantity() != null
+                    ? productItemPrice.getQuantity()
+                    : 0;
+
+            long newQuantity = stockMaster.getQuantity() != null
+                    ? stockMaster.getQuantity()
+                    : 0;
+
+            productItemPrice.setQuantity(oldQuantity + newQuantity);
 
         } else {
 
+            // No price record exists -> create one
             productItemPrice = new ProductItemPrice();
 
             productItemPrice.setProductItem(productItem);
 
             productItemPrice.setQuantity(stockMaster.getQuantity());
+
+            // Only used for first creation
             productItemPrice.setMrp(stockMaster.getMrp());
             productItemPrice.setMsp(stockMaster.getMsp());
         }
 
-        productItemPrice = productItemPriceRepository.save(productItemPrice);
+        productItemPrice =
+                productItemPriceRepository.save(productItemPrice);
+
+        Optional<StockMaster> existingStock = stockMasterRepository.findByitemNameIgnoreCase(
+                        stockMaster.getItemName()
+                );
 
 
-        stockMaster.setProductItemPriceId(productItemPrice.getId());
+        if (existingStock.isPresent()) {
 
-        // Save StockMaster
-        return stockMasterRepository.save(stockMaster);
+            StockMaster stock = existingStock.get();
+
+            long oldQuantity = stock.getQuantity() != null
+                    ? stock.getQuantity()
+                    : 0;
+
+            long newQuantity = stockMaster.getQuantity() != null
+                    ? stockMaster.getQuantity()
+                    : 0;
+
+            stock.setQuantity(oldQuantity + newQuantity);
+
+            stock.setProductItemPriceId(productItemPrice.getId());
+
+            return stockMasterRepository.save(stock);
+
+        } else {
+
+            stockMaster.setProductItemPriceId(
+                    productItemPrice.getId()
+            );
+
+            return stockMasterRepository.save(stockMaster);
+        }
     }
 }
